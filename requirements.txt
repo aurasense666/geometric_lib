@@ -1,0 +1,2 @@
+# Requirements for geometric_lib testing
+python>=3.6
