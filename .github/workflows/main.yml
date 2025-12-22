@@ -12,25 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-      
+          python-version: "3.12"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Проверяем наличие requirements.txt и удаляем строку с python>= если есть
           if [ -f requirements.txt ]; then
-            grep -v "python>=" requirements.txt > requirements_clean.txt || true
-            pip install -r requirements_clean.txt
+            pip install -r requirements.txt
           fi
-      
+
       - name: Run unit tests
         run: |
-          python -m unittest tests.test_circle.py
-          python -m unittest tests.test_rectangle.py
-          python -m unittest tests.test_triangle.py
-          python -m unittest tests.test_square.py
+          pytest
